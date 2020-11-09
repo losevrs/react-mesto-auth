@@ -1,6 +1,6 @@
 {
   "name": "mesto-react-func",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "losevrs <losevrs@yandex.ru>",
   "description": "Контрольная Яндекс.Практикум по React",
   "private": true,
@@ -14,9 +14,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://losevrs.github.io/mesto-react.git"
+    "url": "git+https://losevrs.github.io/react-mesto-auth.git"
   },
-  "homepage": "http://localhost:3000/",
+  "homepage": "https://losevrs.github.io/react-mesto-auth",
   "scripts": {
     "startdev": "react-scripts start --mode development",
     "start": "react-scripts start",
