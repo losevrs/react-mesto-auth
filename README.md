@@ -18,4 +18,4 @@ yarn build - построение проекта
 Задание:
 **Figma** - https://www.figma.com/file/fUESH7icdnexdbpwgYsUcc/Sprint-14-(RU)?node-id=0%3A1 
 В этой работе - доработка предыдущей работы на React.
-Вот тут по прежнему будет работа - https://losevrs.github.io/react-mesto-auth .
+Вот тут будет работа - https://losevrs.github.io/react-mesto-auth .
