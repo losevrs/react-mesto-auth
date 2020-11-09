@@ -1,4 +1,6 @@
 @import url('./__logo/header__logo.css');
+@import url('./__children/header__children.css');
+@import url('./__link/header__link.css');
 
 .header {
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
@@ -6,6 +8,11 @@
   min-height: 74px;
   padding: 45px 0 0;
   margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 320px) {

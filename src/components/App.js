@@ -1,203 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
+import ProtectedRoute from './ProtectedRoute'
+import MainPage from './MainPage';
 import Header from './Header';
-import Main from './Main';
-import Footer from './Footer';
-
-import EditProfilePopup from './popups/EditProfilePopup';
-import EditAvatarPopup from './popups/EditAvatarPopup';
-import AddPlacePopup from './popups/AddPlacePopup';
-import ConfirmPopup from './popups/ConfirmPopup';
-import ImagePopup from './popups/ImagePopup';
-import SignInForm from './forms/SignInForm/SignInForm';
-
-import { api } from '../utils/Api';
-
-import { CurrentUserContextProvider } from '../contexts/CurrentUserContext';
+import Login from './forms/Login';
+import Register from './forms/Register';
 
 export default () => {
 
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
-  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({});
-  
-  const [isSignInFormOpen, setIsSignInFormOpen] = React.useState(true);
-  const [isSignUpFormOpen, setIsSignUpFormOpen] = React.useState(true);
-
-  // Стейты для Main
-  const [currentUser, setCurrentUser] = React.useState({ name: '', about: '' });
-  const [cards, setCards] = React.useState([]);
-  const [isHidden, setIsHidden] = React.useState(true); //Видимость профиля в Main
-
-  const [isSaving, setIsSaving] = React.useState(false);
-
-  React.useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([userInfo, initialCards]) => {
-        setCurrentUser(userInfo);
-        setCards(initialCards);
-      })
-      .catch((error) => console.log('Ошибка запроса : ', error))
-      .finally(() => {
-        setIsHidden(false);
-      });
-  }, []);
-
-  const handleCardClick = (card) => {
-    setSelectedCard(card);
-    setIsImagePopupOpen(true);
-  }
-
-  const handleCardLike = (card) => {
-    const isLiked = card.likes.some((item) => { return item._id === currentUser._id; });
-
-    api.like(card._id, !isLiked)
-      .then((newCard) => {
-        const newCards = cards.map((c) => c._id === card._id ? newCard : c);
-        setCards(newCards);
-      })
-      .catch((error) => console.log('Ошибка обработки лайка : ', error))
-  }
-
-  const handleCardConfirm = (card) => {
-    setSelectedCard(card);
-    setIsConfirmPopupOpen(true);
-  }
-
-  const handleCardDelete = () => {
-    setIsSaving(true);
-    api.deleteCard(selectedCard._id)
-      .then(() => {
-        const newCards = [...cards];
-        const index = newCards.findIndex((item) => { return item._id === selectedCard._id });
-        if (index >= 0) {
-          newCards.splice(index, 1);
-          setCards(newCards);
-        }
-        closeAllPopups();
-      })
-      .catch((error) => console.log('Ошибка удаления карточки : ', error));
-  }
-
-  const handleUpdateUser = ({ name, about }) => {
-    setIsSaving(true);
-    api.saveProfile({ 'name': name, 'about': about })
-      .then((userInfo) => {
-        setCurrentUser(userInfo);
-        closeAllPopups();
-      })
-      .catch((error) => console.log('Ошибка изменения данных пользователя : ', error));
-  }
-
-  const handleUpdateAvatar = ({ avatar }) => {
-    setIsSaving(true);
-    api.saveAvatar({ 'avatar': avatar })
-      .then((userInfo) => {
-        setCurrentUser(userInfo);
-        closeAllPopups();
-      })
-      .catch((error) => console.log('Ошибка изменения аватара пользователя : ', error));
-  }
-
-  const handleCreateCard = (card) => {
-    setIsSaving(true);
-    api.saveCard(card)
-      .then((cardData) => {
-        if (cardData) {
-          setCards([
-            cardData,
-            ...cards
-          ]);
-        }
-      })
-      .catch((error) => console.log('Ошибка создания карточки : ', error));
-  }
-
-  const closeAllPopups = () => {
-    setIsEditProfilePopupOpen(false);
-    setIsAddPlacePopupOpen(false);
-    setIsEditAvatarPopupOpen(false);
-    setIsImagePopupOpen(false);
-    setIsConfirmPopupOpen(false);
-    setIsSaving(false);
-    setSelectedCard({});
-    setIsSignInFormOpen(false);
-    setIsSignUpFormOpen(false);
-  }
-
-  const handleEditAvatarClick = () => {
-    setIsEditAvatarPopupOpen(true);
-  };
-
-  const handleEditProfileClick = () => {
-    setIsEditProfilePopupOpen(true);
-  };
-
-  const handleAddPlaceClick = () => {
-    setIsAddPlacePopupOpen(true);
-  };
+  const [loggedIn, setLoggedIn] = useState(false);
+  const history = useHistory();
 
   return (
     <div className='page'>
-      <CurrentUserContextProvider value={currentUser}>
-        <Header />
-
-        {!isSignInFormOpen || !isSignUpFormOpen
-          ? <><Main onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
-            onCardClick={handleCardClick}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardConfirm}
-            isHidden={isHidden}
-            cards={cards}
-          />
-          <Footer /></>
-          : <SignInForm
-            isOpened={isSignInFormOpen}
-          />
-        }
-
-        <EditProfilePopup
-          isOpened={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-          buttonTitle={isSaving ? 'Сохранение...' : 'Сохранить'}
-        />
-
-        <EditAvatarPopup
-          isOpened={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-          value={currentUser.avatar}
-          buttonTitle={isSaving ? 'Сохранение...' : 'Сохранить'}
-        />
-
-        <AddPlacePopup
-          isOpened={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onCreateCard={handleCreateCard}
-          buttonTitle={isSaving ? 'Сохранение...' : 'Сохранить'}
-        />
-
-        <ConfirmPopup
-          onConfirm={handleCardDelete}
-          onClose={closeAllPopups}
-          isOpened={isConfirmPopupOpen}
-          buttonTitle={isSaving ? 'Сохранение...' : 'Да'}
-        />
-
-        <ImagePopup
-          card={selectedCard}
-          isOpened={isImagePopupOpen}
-          onClose={closeAllPopups}
-        />
-
-      </CurrentUserContextProvider>
+      <Switch>
+        <Route path='/sign-in'>
+          <Header>
+            <Link className='header__link' to='/sign-up'>Регистрация</Link>
+          </Header>
+          <Login />
+        </Route>
+        <Route path='/sign-up'>
+          <Header>
+            <Link className='header__link' to='/sign-in'>Вход</Link>
+          </Header>
+          <Register />
+        </Route>
+        <ProtectedRoute loggedIn={loggedIn} component={MainPage} />
+      </Switch>
     </div>
   );
 }
-

@@ -1,6 +1,6 @@
 import React from 'react'
-import SignForm from '../SignForm';
-import InputWithBrowserValidation from '../../UIelements/InputWithBrowserValidation';
+import SignForm from './SignForm';
+import InputWithBrowserValidation from '../UIelements/InputWithBrowserValidation';
 
 export default props => {
   const [userEmail, setUserEmail] = React.useState('');
@@ -25,11 +25,11 @@ export default props => {
 
   return (
     <SignForm
-      isOpened={props.isSignFormOpen}
-      title='Вход'
-      buttonTitle='Войти'
+      title='Регистрация'
+      buttonTitle='Зарегистрироваться'
       buttonEnabled={buttonEnabled}
-      linkText="Ещё не зарегистрированы? Регистрация"
+      linkText='Уже зарегистрированы? Войти'
+      linkTo='/sign-in'
     >
 
       <InputWithBrowserValidation

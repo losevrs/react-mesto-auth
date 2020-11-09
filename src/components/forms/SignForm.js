@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default (props) => {
 
@@ -11,21 +12,24 @@ export default (props) => {
     <form className='signform'
       action='#'
       method='POST'
-      name={`${props.name}`
-      }
+      name={`${props.name}`}
       noValidate
       onSubmit={props.onSubmit} >
 
       <h2 className='signform__title'>{`${props.title}`}</h2>
 
-      { props.children}
+      { props.children }
 
       <button
         className={`signform__submit ${enabled ? '' : 'signform__submit_disabled'}`}
         disabled={enabled ? '' : 'disabled'}
         type='submit'>{props.buttonTitle}</button>
 
-      <a href='#' className='signform__link' onClick={props.onRefClick}>{props.linkText}</a>
+      {props.linkTo
+        ? <Link to={props.linkTo} className='signform__link'>{props.linkText}</Link>
+        : null
+      }
+
 
     </form >
   );
