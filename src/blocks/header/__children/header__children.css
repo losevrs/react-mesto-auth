@@ -1,3 +1,12 @@
 .header__children {
-  display: inline;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
 }

@@ -5,8 +5,10 @@
   font-size: 18px;
   line-height: 22px;
   text-align: right;
+  margin-left: 24px;
 }
 
 .header__link:hover {
   cursor: pointer;
+  color: #A9A9A9;
 }

@@ -14,6 +14,9 @@
 
 @import url('./__error/_visible/popup__error_visible.css');
 
+@import url('./__infoimage/popup__infoimage.css');
+@import url('./__infomessage/popup__infomessage.css');
+
 .popup {
   display: flex;
   visibility: hidden;

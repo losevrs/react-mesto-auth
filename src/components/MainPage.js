@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 
@@ -9,6 +8,7 @@ import EditAvatarPopup from './popups/EditAvatarPopup';
 import AddPlacePopup from './popups/AddPlacePopup';
 import ConfirmPopup from './popups/ConfirmPopup';
 import ImagePopup from './popups/ImagePopup';
+import InfoTooltip from './popups/InfoTooltip';
 
 import { api } from '../utils/Api';
 
@@ -23,6 +23,9 @@ export default () => {
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
 
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
+  const [isInfoTooltipSuccess, setIsInfoTooltipSuccess] = React.useState(true);
+  
   // Стейты для Main
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '' });
   const [cards, setCards] = React.useState([]);
@@ -119,6 +122,7 @@ export default () => {
     setIsImagePopupOpen(false);
     setIsConfirmPopupOpen(false);
     setIsSaving(false);
+    setIsInfoTooltipOpen(false);
     setSelectedCard({});
   }
 
@@ -136,7 +140,6 @@ export default () => {
 
   return (
     <CurrentUserContextProvider value={currentUser}>
-      <Header />
 
       <Main onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
@@ -184,7 +187,12 @@ export default () => {
         onClose={closeAllPopups}
       />
 
+      <InfoTooltip 
+        isOpened={isInfoTooltipOpen}
+        onClose={closeAllPopups}
+        isSuccess={isInfoTooltipSuccess}
+      />
+
     </CurrentUserContextProvider>
   );
 }
-

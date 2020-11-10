@@ -9,22 +9,17 @@ import Register from './forms/Register';
 
 export default () => {
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const history = useHistory();
 
   return (
     <div className='page'>
+      <Header />
       <Switch>
         <Route path='/sign-in'>
-          <Header>
-            <Link className='header__link' to='/sign-up'>Регистрация</Link>
-          </Header>
           <Login />
         </Route>
         <Route path='/sign-up'>
-          <Header>
-            <Link className='header__link' to='/sign-in'>Вход</Link>
-          </Header>
           <Register />
         </Route>
         <ProtectedRoute loggedIn={loggedIn} component={MainPage} />
