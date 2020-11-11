@@ -19,7 +19,7 @@ export default (props) => {
         alt='Логотип' />
       <div className='header__children'>
         <Route exact path='/'>
-          <p>{props.userEmail}</p>
+          <p className='header__email'>{props.userEmail}</p>
         </Route>
         <Switch>
           <Route path='/sign-in'>

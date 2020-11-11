@@ -15,8 +15,8 @@
 
 @media screen and (max-width: 515px) {
   .popup__reset {
-    top: -35px;
-    right: -35px;
+    top: -55px;
+    right: calc(50% - 18px);
     background-image: url('../../../images/popup/CloseIconSm.svg');
   }
 }

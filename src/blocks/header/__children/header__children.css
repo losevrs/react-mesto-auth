@@ -10,3 +10,21 @@
   font-size: 18px;
   line-height: 22px;
 }
+
+@media screen and (max-width: 900px) {
+  .header__children {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    margin-right: 27px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .header__children {
+    flex-direction: column;
+    margin: auto;
+    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+    width: 100%;
+  }
+}

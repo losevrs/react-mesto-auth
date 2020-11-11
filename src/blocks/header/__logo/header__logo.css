@@ -11,3 +11,11 @@
     margin-left: 27px;
   }
 }
+
+@media screen and (max-width: 400px) {
+  .header__logo {
+    align-self: flex-start;
+    margin-bottom: 31px;
+    margin-top: 27px;
+  }
+}
