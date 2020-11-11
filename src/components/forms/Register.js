@@ -1,4 +1,5 @@
 import React from 'react'
+
 import SignForm from './SignForm';
 import InputWithBrowserValidation from '../UIelements/InputWithBrowserValidation';
 
@@ -23,13 +24,22 @@ export default props => {
     setUserPassword(event.target.value);
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    props.onSubmit({ 'email': userEmail, 'password': userPassword });
+  }
+
   return (
     <SignForm
       title='Регистрация'
       buttonTitle='Зарегистрироваться'
       buttonEnabled={buttonEnabled}
+      onSubmit={handleSubmit}
       linkText='Уже зарегистрированы? Войти'
       linkTo='/sign-in'
+      showInfo={props.showInfo}
+      success={props.success}
+      closeInfo={props.onCloseInfo}
     >
 
       <InputWithBrowserValidation

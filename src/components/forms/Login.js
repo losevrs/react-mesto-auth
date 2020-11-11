@@ -23,13 +23,22 @@ export default props => {
     setUserPassword(event.target.value);
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    props.onSubmit({ 'email': userEmail, 'password': userPassword });
+  }
+
   return (
     <SignForm
       title='Вход'
       buttonTitle='Войти'
       buttonEnabled={buttonEnabled}
+      onSubmit={handleSubmit}
       linkText='Ещё не зарегистрированы? Регистрация'
       linkTo='/sign-up'
+      showInfo={props.showInfo}
+      success={props.success}
+      closeInfo={props.onCloseInfo}
     >
 
       <InputWithBrowserValidation

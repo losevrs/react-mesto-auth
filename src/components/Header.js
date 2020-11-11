@@ -1,11 +1,15 @@
 import React from 'react';
 import logo from '../images/header/logo.svg';
-import { Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Link, Route, Switch, useHistory } from 'react-router-dom';
+
+import { tokenDelete } from '../utils/token';
 
 export default (props) => {
+  const history = useHistory();
 
-  const onLogoutClick = (event) => {
-    console.log('Тыц!');
+  const onLogoutClick = () => {
+    tokenDelete();
+    history.push('/sign-in')
   }
 
   return (
@@ -15,7 +19,7 @@ export default (props) => {
         alt='Логотип' />
       <div className='header__children'>
         <Route exact path='/'>
-          <p>Тут мыло будет</p>
+          <p>{props.userEmail}</p>
         </Route>
         <Switch>
           <Route path='/sign-in'>
@@ -25,7 +29,7 @@ export default (props) => {
             <Link className='header__link' to='/sign-in'>Вход</Link>
           </Route>
           <Route exact path='/'>
-            <Link className='header__link header__link_logout' onClick={onLogoutClick}>Выход</Link>
+            <Link className='header__link header__link_logout' to='/sign-in' onClick={onLogoutClick}>Выход</Link>
           </Route>
         </Switch>
       </div>

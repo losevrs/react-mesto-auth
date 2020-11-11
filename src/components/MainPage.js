@@ -8,7 +8,8 @@ import EditAvatarPopup from './popups/EditAvatarPopup';
 import AddPlacePopup from './popups/AddPlacePopup';
 import ConfirmPopup from './popups/ConfirmPopup';
 import ImagePopup from './popups/ImagePopup';
-import InfoTooltip from './popups/InfoTooltip';
+
+//import InfoTooltip from './popups/InfoTooltip';
 
 import { api } from '../utils/Api';
 
@@ -23,8 +24,8 @@ export default () => {
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
 
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
-  const [isInfoTooltipSuccess, setIsInfoTooltipSuccess] = React.useState(true);
+//  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
+//  const [isInfoTooltipSuccess, setIsInfoTooltipSuccess] = React.useState(true);
   
   // Стейты для Main
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '' });
@@ -122,7 +123,7 @@ export default () => {
     setIsImagePopupOpen(false);
     setIsConfirmPopupOpen(false);
     setIsSaving(false);
-    setIsInfoTooltipOpen(false);
+//    setIsInfoTooltipOpen(false);
     setSelectedCard({});
   }
 
@@ -187,11 +188,11 @@ export default () => {
         onClose={closeAllPopups}
       />
 
-      <InfoTooltip 
+      {/* <InfoTooltip 
         isOpened={isInfoTooltipOpen}
         onClose={closeAllPopups}
         isSuccess={isInfoTooltipSuccess}
-      />
+      /> */}
 
     </CurrentUserContextProvider>
   );
