@@ -8,11 +8,14 @@ import Login from './forms/Login';
 import Register from './forms/Register';
 
 import { tokenGet, tokenSet } from '../utils/token';
+import { emailGet, emailSet } from '../utils/userEmail';
 import { getUser, signUp, signIn } from '../utils/yapApi';
+
+import { AuthDataContextProvider } from '../contexts/AuthDataContext';
 
 export default () => {
 
-  const [authData, setAuthData] = useState({ _id: '', email: '' });
+  const [authData, setAuthData] = useState({ _id: '', email: emailGet() || '' });
   const [loggedIn, setLoggedIn] = useState(false);
   const history = useHistory();
 
@@ -44,6 +47,11 @@ export default () => {
           setLoggedIn(true);
           history.push('/')
         }
+      })
+      .catch((error) => {
+        setSuccessInfo(false);
+        setShowInfo(true);
+        console.log(error);
       });
   }
 
@@ -51,6 +59,7 @@ export default () => {
     signIn(email, password)
       .then((res) => {
         tokenSet(res.token);
+        emailSet(email);
         setLoggedIn(true);
         history.push('/')
       })
@@ -59,8 +68,6 @@ export default () => {
         setShowInfo(true);
         console.log(error);
       });
-
-    return;
   }
 
   const onSubmitRegister = ({ email, password }) => {
@@ -85,32 +92,34 @@ export default () => {
 
   useEffect(() => {
     handleTokenCheck();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className='page'>
-      <Header
-        userEmail={authData.email} />
-      <Switch>
-        <Route path='/sign-in'>
-          <Login
-            onSubmit={onSubmitLogin}
-            showInfo={showInfo}
-            success={successInfo}
-            onCloseInfo={() => onCloseInfo('/')}
-          />
-        </Route>
-        <Route path='/sign-up'>
-          <Register
-            onSubmit={onSubmitRegister}
-            showInfo={showInfo}
-            success={successInfo}
-            onCloseInfo={() => onCloseInfo('/sign-in')}
-          />
-        </Route>
-        <ProtectedRoute loggedIn={loggedIn} component={MainPage} />
-      </Switch>
-    </div>
+    <AuthDataContextProvider value={authData}>
+      <div className='page'>
+        <Header
+          userEmail={authData.email} />
+        <Switch>
+          <Route path='/sign-in'>
+            <Login
+              onSubmit={onSubmitLogin}
+              showInfo={showInfo}
+              success={successInfo}
+              onCloseInfo={() => onCloseInfo('/')}
+            />
+          </Route>
+          <Route path='/sign-up'>
+            <Register
+              onSubmit={onSubmitRegister}
+              showInfo={showInfo}
+              success={successInfo}
+              onCloseInfo={() => onCloseInfo('/sign-in')}
+            />
+          </Route>
+          <ProtectedRoute loggedIn={loggedIn} component={MainPage} />
+        </Switch>
+      </div>
+    </AuthDataContextProvider>
   );
 }

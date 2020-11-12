@@ -2,7 +2,11 @@ import React from 'react'
 import SignForm from './SignForm';
 import InputWithBrowserValidation from '../UIelements/InputWithBrowserValidation';
 
+import { useAuthDataContext } from '../../contexts/AuthDataContext';
+
 export default props => {
+  const authData = useAuthDataContext();
+
   const [userEmail, setUserEmail] = React.useState('');
   const [userEmailIsValid, setUserEmailIsValid] = React.useState(true);
   const [isUserEmailTouched, setIsUserEmailTouched] = React.useState(false);
@@ -12,6 +16,11 @@ export default props => {
   const [isUserPasswordTouched, setIsUserPasswordTouched] = React.useState(false);
 
   const buttonEnabled = userEmailIsValid && userPasswordIsValid;
+
+  React.useEffect(() => {
+    setUserEmail(authData.email);
+    setUserPassword('');
+  }, [authData]);
 
   const handleChangeEmail = (event) => {
     setIsUserEmailTouched(true);

@@ -9,8 +9,6 @@ import AddPlacePopup from './popups/AddPlacePopup';
 import ConfirmPopup from './popups/ConfirmPopup';
 import ImagePopup from './popups/ImagePopup';
 
-//import InfoTooltip from './popups/InfoTooltip';
-
 import { api } from '../utils/Api';
 
 import { CurrentUserContextProvider } from '../contexts/CurrentUserContext';
@@ -24,9 +22,6 @@ export default () => {
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
 
-//  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
-//  const [isInfoTooltipSuccess, setIsInfoTooltipSuccess] = React.useState(true);
-  
   // Стейты для Main
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '' });
   const [cards, setCards] = React.useState([]);
@@ -123,8 +118,6 @@ export default () => {
     setIsImagePopupOpen(false);
     setIsConfirmPopupOpen(false);
     setIsSaving(false);
-//    setIsInfoTooltipOpen(false);
-    setSelectedCard({});
   }
 
   const handleEditAvatarClick = () => {
@@ -187,12 +180,6 @@ export default () => {
         isOpened={isImagePopupOpen}
         onClose={closeAllPopups}
       />
-
-      {/* <InfoTooltip 
-        isOpened={isInfoTooltipOpen}
-        onClose={closeAllPopups}
-        isSuccess={isInfoTooltipSuccess}
-      /> */}
 
     </CurrentUserContextProvider>
   );

@@ -22,6 +22,8 @@
 
 @media screen and (max-width: 400px) {
   .header__children {
+    display: none;
+    padding-top: 40px;
     flex-direction: column;
     margin: auto;
     border-bottom: 1px solid rgba(84, 84, 84, 0.7);

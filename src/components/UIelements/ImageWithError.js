@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import errorImage from '../../images/onerror.jpg';
 
 export default (props) => {

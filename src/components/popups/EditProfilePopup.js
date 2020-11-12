@@ -22,7 +22,7 @@ export default props => {
   React.useEffect(() => {
     setUserName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, props.isOpened]);
 
   const handleChangeName = (event) => {
     setIsUserNameTouched(true);
