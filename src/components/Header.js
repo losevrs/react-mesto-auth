@@ -13,6 +13,9 @@ export default (props) => {
   const onLogoutClick = () => {
     tokenDelete();
     emailDelete();
+    if (props.onLogout) {
+      props.onLogout();
+    }
     history.push('/sign-in')
   }
 

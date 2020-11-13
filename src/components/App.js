@@ -15,7 +15,7 @@ import { AuthDataContextProvider } from '../contexts/AuthDataContext';
 
 export default () => {
 
-  const [authData, setAuthData] = useState({ _id: '', email: emailGet() || '' });
+  const [authData, setAuthData] = useState({ _id: '', email: emailGet() || '', pwd: null });
   const [loggedIn, setLoggedIn] = useState(false);
   const history = useHistory();
 
@@ -27,6 +27,11 @@ export default () => {
     if (successInfo) {
       history.push(url);
     }
+  }
+
+  const onLogoutHandle = () => {
+    setAuthData({ _id: '', email: '', pwd: null });
+    setLoggedIn(false);
   }
 
   const handleTokenCheck = () => {
@@ -41,7 +46,8 @@ export default () => {
         if (res) {
           const authData = {
             _id: res.data._id,
-            email: res.data.email
+            email: res.data.email,
+            pwd: null
           }
           setAuthData(authData);
           setLoggedIn(true);
@@ -76,7 +82,8 @@ export default () => {
         if (res) {
           const authData = {
             _id: res.data._id,
-            email: res.data.email
+            email: res.data.email,
+            pwd: password
           }
           setAuthData(authData);
           setSuccessInfo(true);
@@ -99,7 +106,8 @@ export default () => {
     <AuthDataContextProvider value={authData}>
       <div className='page'>
         <Header
-          userEmail={authData.email} />
+          userEmail={authData.email}
+          onLogout={onLogoutHandle} />
         <Switch>
           <Route path='/sign-in'>
             <Login

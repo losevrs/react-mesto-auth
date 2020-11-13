@@ -19,7 +19,9 @@ export default props => {
 
   React.useEffect(() => {
     setUserEmail(authData.email);
-    setUserPassword('');
+    if (authData.pwd) {
+      setUserPassword(authData.pwd);
+    }
   }, [authData]);
 
   const handleChangeEmail = (event) => {
